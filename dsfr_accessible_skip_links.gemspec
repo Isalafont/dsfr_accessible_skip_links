@@ -21,6 +21,15 @@ Gem::Specification.new do |spec|
   spec.metadata["changelog_uri"] = "https://github.com/Isalafont/dsfr_accessible_skip_links/blob/main/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
+  spec.post_install_message = <<~MSG
+    Thank you for installing dsfr_accessible_skip_links (v#{DsfrAccessibleSkipLinks::VERSION})!
+
+    To complete setup in your Rails app, run:
+      bin/rails g dsfr_accessible_skip_links:install
+
+    This will copy the skip links partial and inject the render call into your application layout.
+  MSG
+
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
     `git ls-files -z 2>/dev/null`.split("\x0").reject do |f|
       (f == __FILE__) || f.match(%r{\A(?:(?:test|spec|features)/|\.(?:git|travis|circleci)|appveyor)})
