@@ -11,14 +11,14 @@ Gem::Specification.new do |spec|
   spec.description = "A Ruby gem that helps projects implement accessible skip links according to " \
                      "the French government design system (DSFR). Provides helpers and utilities " \
                      "for creating navigation skip links that improve accessibility."
-  spec.homepage = "https://github.com/etalab/dsfr_accessible_skip_links"
+  spec.homepage = "https://github.com/Isalafont/dsfr_accessible_skip_links"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/etalab/dsfr_accessible_skip_links"
-  spec.metadata["changelog_uri"] = "https://github.com/etalab/dsfr_accessible_skip_links/blob/main/CHANGELOG.md"
+  spec.metadata["source_code_uri"] = "https://github.com/Isalafont/dsfr_accessible_skip_links"
+  spec.metadata["changelog_uri"] = "https://github.com/Isalafont/dsfr_accessible_skip_links/blob/main/CHANGELOG.md"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
