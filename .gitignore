@@ -1,0 +1,56 @@
+# Gem packaging
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Documentation
+/.yardoc/
+/_yardoc/
+/doc/
+/rdoc/
+
+# Bundler
+/.bundle/
+/vendor/bundle
+/lib/bundler/man/
+
+# For gems: ignore Gemfile.lock
+Gemfile.lock
+
+# RSpec failure tracking
+.rspec_status
+
+# RVM / rbenv
+/.rvmrc
+/.ruby-version
+/.ruby-gemset
+
+# IDE files
+/.vscode/
+/.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# RuboCop cache
+.rubocop_cache/
