@@ -10,11 +10,15 @@ Add this line to your application's Gemfile:
 gem 'dsfr_accessible_skip_links'
 ```
 
-And then execute:
+Then install the gem:
 
     $ bundle install
 
-Or install it yourself as:
+Run the installer to set up the skip links in your Rails app (copies the partial and injects the render in your layout):
+
+    $ bin/rails g dsfr_accessible_skip_links:install
+
+You can also install the gem itself directly as:
 
     $ gem install dsfr_accessible_skip_links
 
@@ -130,6 +134,69 @@ This gem implements skip links following WCAG 2.2 guidelines and DSFR specificat
 - Keyboard navigation support
 - Focus management
 - Compatible with DSFR CSS for visual styling
+
+## How to test this gem
+
+There are two main ways to test this gem:
+
+1) Run the gem's test suite locally (fast, no Rails app needed)
+- Install dependencies:
+  ```bash
+  bundle install
+  ```
+- Run RSpec:
+  ```bash
+  bundle exec rake spec
+  ```
+- Run RuboCop:
+  ```bash
+  bundle exec rake rubocop
+  ```
+- Run both (default task):
+  ```bash
+  bundle exec rake
+  ```
+
+2) Try it inside a real Rails app (to test the generator and integration)
+- Create a new Rails app (or use an existing one):
+  ```bash
+  rails new demo_app --skip-javascript --skip-hotwire --skip-action-mailbox --skip-action-text --skip-active-storage --skip-active-job --skip-system-test
+  cd demo_app
+  ```
+- Point the app to your local copy of this gem. In demo_app/Gemfile add:
+  ```ruby
+  gem 'dsfr_accessible_skip_links', path: '../path/to/your/dsfr_accessible_skip_links'
+  ```
+  Then run:
+  ```bash
+  bundle install
+  ```
+- Run the installer (copies the partial and injects a render line into your layout):
+  ```bash
+  bin/rails g dsfr_accessible_skip_links:install
+  ```
+- Verify changes:
+  - The partial should exist at: app/views/shared/_skip_links.html.erb
+  - Your app layout (app/views/layouts/application.html.erb) should include:
+    ```erb
+    <%= render partial: 'shared/skip_links' %>
+    ```
+  - Ensure your layout has the anchor targets used by default links:
+    ```erb
+    <header id="header"></header>
+    <main id="content"><%= yield %></main>
+    <footer id="footer"></footer>
+    ```
+- Start the server and check the skip links at the top of the page:
+  ```bash
+  bin/rails s
+  ```
+  Visit http://localhost:3000 and look for the skip links markup
+  ("Aller au contenu", "Menu", "Pied de page").
+
+Notes
+- The generator is idempotent: it won’t insert the render line twice if it already exists.
+- You can customize the skip links in any view using `content_for :skip_links` as described below in Usage.
 
 ## Development
 
