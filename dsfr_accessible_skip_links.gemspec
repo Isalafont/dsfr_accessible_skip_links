@@ -7,7 +7,6 @@ Gem::Specification.new do |spec|
   spec.version = DsfrAccessibleSkipLinks::VERSION
   spec.authors = ["Isabelle Lafont"]
   spec.email = ["isalafont@gmail.com"]
-
   spec.summary = "Accessible skip links implementation following DSFR (Système de design de l'État français) guidelines"
   spec.description = "A Ruby gem that helps projects implement accessible skip links according to " \
                      "the French government design system (DSFR). Provides helpers and utilities " \
