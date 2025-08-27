@@ -12,7 +12,8 @@ module DsfrAccessibleSkipLinks
         "and injecting the render call into the application layout."
       )
       def copy_partial
-        template "_skip_links.html.erb", "app/views/shared/_skip_links.html.erb"
+        # Use copy_file instead of template to avoid evaluating ERB in the generator context
+        copy_file "_skip_links.html.erb", "app/views/shared/_skip_links.html.erb"
       end
 
       # rubocop:disable Metrics/MethodLength
