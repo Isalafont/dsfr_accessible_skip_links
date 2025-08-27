@@ -154,7 +154,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/etalab/dsfr_accessible_skip_links.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Isalafont/dsfr_accessible_skip_links.
 
 ## License
 
