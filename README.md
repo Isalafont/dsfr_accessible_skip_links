@@ -26,7 +26,7 @@ You can also install the gem itself directly as:
 
 ### Rails Integration
 
-The gem automatically integrates with Rails through a Rails Engine. The `SkipLinks` module is automatically included in `ApplicationController`.
+The gem automatically integrates with Rails through a Rails Engine. The `SkipLinks` module is automatically included in controllers and views (via Rails on_load hooks), so you can call the helpers directly from templates and controllers.
 
 In your layout file (e.g., `app/views/layouts/application.html.erb`), add the skip links at the top:
 

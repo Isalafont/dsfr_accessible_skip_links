@@ -14,8 +14,16 @@ module DsfrAccessibleSkipLinks
       end
     end
 
-    config.to_prepare do
-      ApplicationController.include(DsfrAccessibleSkipLinks::SkipLinks) if defined?(ApplicationController)
+    # Ensure helpers are available automatically in controllers and views
+    initializer "dsfr_accessible_skip_links.helpers" do
+      ActiveSupport.on_load(:action_controller_base) do
+        include DsfrAccessibleSkipLinks::SkipLinks
+        helper DsfrAccessibleSkipLinks::SkipLinks if respond_to?(:helper)
+      end
+
+      ActiveSupport.on_load(:action_view) do
+        include DsfrAccessibleSkipLinks::SkipLinks
+      end
     end
   end
 end

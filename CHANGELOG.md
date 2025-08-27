@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.3] - 2025-08-27
 ### Fixed
 - Generator now uses `copy_file` instead of `template` to avoid evaluating ERB in the partial during generation. This prevents `NameError` for `skip_links_content`.
+- Ensure DsfrAccessibleSkipLinks::SkipLinks is automatically included using `ActiveSupport.on_load` hooks:
+- Included into `ActionController::Base` (controller-side) and exposed as view helpers
+- Included into `ActionView` (view-side) so helpers are available in templates without manual setup
 
 ## [0.1.2] - 2025-08-27
 ### Added
