@@ -18,6 +18,7 @@ module DsfrAccessibleSkipLinks
     initializer "dsfr_accessible_skip_links.helpers" do
       ActiveSupport.on_load(:action_controller_base) do
         include DsfrAccessibleSkipLinks::SkipLinks
+
         helper DsfrAccessibleSkipLinks::SkipLinks if respond_to?(:helper)
       end
 
