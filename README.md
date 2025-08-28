@@ -220,14 +220,43 @@ To fix this, either:
 
 ## Accessibility Features
 
-This gem implements skip links following WCAG 2.2 guidelines and DSFR specifications:
+This gem implements skip links following [WCAG 2.2 guidelines](https://www.w3.org/WAI/WCAG22/quickref/) and [DSFR (Système de Design de l'État français)](https://www.systeme-de-design.gouv.fr/) specifications:
 
-- Proper semantic HTML structure with `nav` element and `role="navigation"`
-- Descriptive `aria-label` for screen readers
-- Keyboard navigation support
-- Focus management
-- Compatible with DSFR CSS for visual styling
-- Automated validation ensures skip links are not forgotten
+### Standards Compliance
+- **WCAG 2.2 Level AA**: Complies with international web accessibility standards
+- **DSFR Guidelines**: Follows French government design system accessibility requirements
+- **RGAA 4.1**: Compatible with French web accessibility reference guidelines (Référentiel Général d'Amélioration de l'Accessibilité)
+
+### Technical Features
+- **Semantic HTML**: Proper structure with `<nav>` element and `role="navigation"`
+- **Screen Reader Support**: Descriptive `aria-label="Accès rapide"` for assistive technologies
+- **Keyboard Navigation**: Full keyboard accessibility with proper focus management
+- **Skip to Content**: Direct navigation to main content areas (#content, #header, #footer)
+- **Visual Design**: Compatible with official DSFR CSS classes for consistent styling
+
+### Quality Assurance
+- **Automated Validation**: Built-in checker ensures skip links are not forgotten on any page
+- **Test Environment Integration**: Validates skip links presence during test runs
+- **Configurable Validation**: Whitelist specific routes that don't require skip links
+- **Development Feedback**: Clear error messages guide developers to implement missing skip links
+
+### DSFR Integration
+This gem implements the official [DSFR skip links component](https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/liens-d-evitement) following:
+- Official CSS classes (`.fr-skiplinks`, `.fr-container`, `.fr-skiplinks__list`, `.fr-link`)
+- Recommended HTML structure and ARIA attributes
+- French language defaults for government websites
+- Responsive design compatibility
+
+### Accessibility Benefits
+- **Faster Navigation**: Screen reader and keyboard users can quickly skip to main content
+- **Reduced Cognitive Load**: Clear navigation structure improves user experience
+- **Legal Compliance**: Helps meet French accessibility requirements for public sector websites
+- **Universal Design**: Benefits all users, especially those with motor or visual impairments
+
+For more information about French web accessibility requirements, visit:
+- [DSFR Official Documentation](https://www.systeme-de-design.gouv.fr/)
+- [RGAA Guidelines](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/)
+- [WCAG 2.2 Guidelines](https://www.w3.org/WAI/WCAG22/quickref/)
 
 ## How to test this gem
 
