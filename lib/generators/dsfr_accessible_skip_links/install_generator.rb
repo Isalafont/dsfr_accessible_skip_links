@@ -35,13 +35,25 @@ module DsfrAccessibleSkipLinks
 
       def readme
         say <<~MSG
-               DsfrAccessibleSkipLinks installed.
+          DsfrAccessibleSkipLinks installed successfully!
 
-               - A copy of the skip links partial has been placed at app/views/shared/_skip_links.html.erb
-               - Your controllers and views automatically get the helpers via the gem's auto-inclusion.
-               - If gem's auto-inclusion did not work, inject the render line into your layout automatically by running the cmd: `bin/rails g dsfr_accessible_skip_links:install --inject-layout`
+          📁 Files created:
+             • app/views/shared/_skip_links.html.erb (skip links partial)
 
-          Ensure your layout contains elements with ids: #header, #content, and #footer for the default links.
+          🔧 Next steps:
+             1. Add <%= render 'shared/skip_links' %> to your layout file (typically app/views/layouts/application.html.erb)
+                Place it right after the <body> tag for best accessibility.
+
+             2. Ensure your layout has these elements with IDs:
+                • #header (main navigation)
+                • #content (main content area)  
+                • #footer (page footer)
+
+          💡 Quick setup option:
+             Run `bin/rails g dsfr_accessible_skip_links:install --inject-layout` to automatically
+             add the render call to your application layout.
+
+          ℹ️  Helpers are automatically available in all controllers and views.
         MSG
       end
 

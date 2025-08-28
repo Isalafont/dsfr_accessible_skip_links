@@ -14,9 +14,26 @@ Then install the gem:
 
     $ bundle install
 
-Run the installer to set up the skip links in your Rails app (copies the partial and injects the render in your layout):
+Run the installer to set up the skip links in your Rails app:
 
     $ bin/rails g dsfr_accessible_skip_links:install
+
+This will:
+- Copy the skip links partial to `app/views/shared/_skip_links.html.erb`
+- Show you instructions on how to add it to your layout
+
+**Next step:** Add the render call to your layout file (typically `app/views/layouts/application.html.erb`):
+
+```erb
+<body>
+  <%= render 'shared/skip_links' %>
+  <!-- rest of your content -->
+</body>
+```
+
+**Quick setup option:** Use `--inject-layout` flag to automatically add the render call:
+
+    $ bin/rails g dsfr_accessible_skip_links:install --inject-layout
 
 You can also install the gem itself directly as:
 
@@ -24,36 +41,25 @@ You can also install the gem itself directly as:
 
 ## Usage
 
-### Rails Integration
+### Required Elements
 
-The gem automatically integrates with Rails through a Rails Engine. The `SkipLinks` module is automatically included in controllers and views (via Rails on_load hooks), so you can call the helpers directly from templates and controllers.
-
-In your layout file (e.g., `app/views/layouts/application.html.erb`), add the skip links at the top:
+Make sure your layout contains these elements with the correct IDs:
 
 ```erb
-<!DOCTYPE html>
-<html>
-  <head>
-    <!-- head content -->
-  </head>
-  <body>
-    <%= render partial: 'shared/skip_links' %>
-    
-    <!-- rest of your layout -->
-    <header id="header">
-      <!-- your navigation -->
-    </header>
-    
-    <main id="content">
-      <%= yield %>
-    </main>
-    
-    <footer id="footer">
-      <!-- your footer -->
-    </footer>
-  </body>
-</html>
+<header id="header">
+  <!-- your navigation -->
+</header>
+
+<main id="content">
+  <%= yield %>
+</main>
+
+<footer id="footer">
+  <!-- your footer -->
+</footer>
 ```
+
+The gem automatically integrates with Rails through a Rails Engine. Helper methods are automatically available in all controllers and views.
 
 ### Default Skip Links
 
@@ -171,22 +177,12 @@ There are two main ways to test this gem:
   ```bash
   bundle install
   ```
-- Run the installer (copies the partial and injects a render line into your layout):
+- Run the installer:
   ```bash
   bin/rails g dsfr_accessible_skip_links:install
   ```
-- Verify changes:
-  - The partial should exist at: app/views/shared/_skip_links.html.erb
-  - Your app layout (app/views/layouts/application.html.erb) should include:
-    ```erb
-    <%= render partial: 'shared/skip_links' %>
-    ```
-  - Ensure your layout has the anchor targets used by default links:
-    ```erb
-    <header id="header"></header>
-    <main id="content"><%= yield %></main>
-    <footer id="footer"></footer>
-    ```
+- Verify the partial exists at: `app/views/shared/_skip_links.html.erb`
+- Add the render call to your layout and ensure required HTML elements exist (see Usage section above)
 - Start the server and check the skip links at the top of the page:
   ```bash
   bin/rails s
@@ -194,9 +190,8 @@ There are two main ways to test this gem:
   Visit http://localhost:3000 and look for the skip links markup
   ("Aller au contenu", "Menu", "Pied de page").
 
-Notes
-- The generator is idempotent: it won’t insert the render line twice if it already exists.
-- You can customize the skip links in any view using `content_for :skip_links` as described below in Usage.
+**Notes:**
+- The generator is idempotent: it won't insert the render line twice if it already exists.
 
 ## Development
 
