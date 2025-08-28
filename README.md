@@ -131,6 +131,93 @@ The generated HTML follows this structure:
 </div>
 ```
 
+## Skip Links Validation
+
+The gem includes a validation service to ensure skip links are properly implemented across your application during testing.
+
+### SkipLinksImplementedChecker
+
+The `SkipLinksImplementedChecker` service automatically validates that pages either:
+- Have custom skip links defined via `content_for(:skip_links)`
+- Are included in your whitelisted routes configuration
+
+This validation runs automatically in test environments when skip links are rendered.
+
+### Configuration
+
+Configure routes that should be exempt from skip links validation:
+
+```ruby
+# config/initializers/dsfr_accessible_skip_links.rb
+DsfrAccessibleSkipLinks.configure do |config|
+  config.whitelisted_routes = [
+    'pages#home',
+    'pages#about',
+    'admin/dashboard#index',
+    'users#show',
+    'posts#index'
+  ]
+end
+```
+
+### Disabling Validation
+
+If your project already has its own skip links validation system, you can disable the gem's built-in validation:
+
+```ruby
+# config/initializers/dsfr_accessible_skip_links.rb
+DsfrAccessibleSkipLinks.configure do |config|
+  config.disable_validation = true
+end
+```
+
+When `disable_validation` is set to `true`:
+- The `SkipLinksImplementedChecker` will not run automatically in tests
+- You can still use the gem's helper methods for generating skip links
+- No validation errors will be raised, giving you full control over accessibility checks
+
+### Manual Usage
+
+You can also use the checker manually in your tests or application:
+
+```ruby
+# In a controller or test
+checker = DsfrAccessibleSkipLinks::SkipLinksImplementedChecker.new(
+  controller_name: 'posts',
+  action_name: 'show',
+  has_skip_links: content_for?(:skip_links)
+)
+
+begin
+  checker.perform!
+  # Skip links are properly configured
+rescue DsfrAccessibleSkipLinks::SkipLinksImplementedChecker::SkipLinksNotDefinedError => e
+  # Handle missing skip links
+  puts e.message
+end
+```
+
+### Integration in Rails Tests
+
+The validation automatically runs during testing. If a page lacks skip links and isn't whitelisted, you'll see:
+
+```
+DsfrAccessibleSkipLinks::SkipLinksImplementedChecker::SkipLinksNotDefinedError: 
+No skip links defined for this page (posts#show). Use content_for(:skip_links) 
+to define skip links or define them in a view-specific helper.
+```
+
+To fix this, either:
+1. Add the route to your whitelist configuration
+2. Define custom skip links in your view:
+
+```erb
+<% content_for :skip_links do %>
+  <%= skip_link('Aller au contenu', 'main-content') %>
+  <%= skip_link('Aller aux commentaires', 'comments') %>
+<% end %>
+```
+
 ## Accessibility Features
 
 This gem implements skip links following WCAG 2.2 guidelines and DSFR specifications:
@@ -140,6 +227,7 @@ This gem implements skip links following WCAG 2.2 guidelines and DSFR specificat
 - Keyboard navigation support
 - Focus management
 - Compatible with DSFR CSS for visual styling
+- Automated validation ensures skip links are not forgotten
 
 ## How to test this gem
 
@@ -193,6 +281,42 @@ There are two main ways to test this gem:
 **Notes:**
 - The generator is idempotent: it won't insert the render line twice if it already exists.
 
+### Setting up Skip Links Validation
+
+After installing the gem, create an initializer to configure whitelisted routes:
+
+```bash
+# Create the initializer file
+touch config/initializers/dsfr_accessible_skip_links.rb
+```
+
+Add your configuration:
+
+```ruby
+# config/initializers/dsfr_accessible_skip_links.rb
+DsfrAccessibleSkipLinks.configure do |config|
+  config.whitelisted_routes = [
+    # Landing pages that use default skip links
+    'pages#home',
+    'pages#about',
+    'pages#contact',
+    
+    # Admin pages with standard layout
+    'admin/dashboard#index',
+    'admin/users#index',
+    
+    # API endpoints or pages without standard layout
+    'api/health#check',
+    'errors#not_found'
+  ]
+end
+```
+
+This configuration ensures that:
+- Listed routes won't trigger validation errors in tests
+- Pages not in the whitelist must define custom skip links
+- You maintain accessibility compliance across your application
+
 ## Development
 
 After checking out the repo, run `bundle install` to install dependencies. 
@@ -212,7 +336,7 @@ Run both tests and RuboCop:
 bundle exec rake
 ```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 

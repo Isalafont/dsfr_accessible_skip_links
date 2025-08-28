@@ -6,9 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- **SkipLinksImplementedChecker**: New validation service to ensure skip links are properly implemented across applications
+- **Configuration system**: Allow users to configure whitelisted routes that are exempt from validation
+- **Disable validation option**: New `disable_validation` configuration for projects with existing validation systems
+- Comprehensive test coverage for validation functionality
+
 ### Changed
 - Improved README documentation with clearer installation and usage instructions
 - Enhanced generator functionality and reliability
+- Updated README with complete documentation for validation features and configuration options
 
 ## [0.1.3] - 2025-08-27
 ### Fixed

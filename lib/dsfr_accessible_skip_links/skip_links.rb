@@ -41,9 +41,17 @@ module DsfrAccessibleSkipLinks
     private
 
     def validate_skip_links_in_test!
-      # This would be implemented to validate skip links in test environment
-      # For now, just a placeholder
-      true
+      return true unless defined?(Rails) && Rails.env.test?
+      return true unless respond_to?(:controller)
+      return true if DsfrAccessibleSkipLinks.configuration.disable_validation
+
+      has_custom_skip_links = content_for?(:skip_links)
+      
+      SkipLinksImplementedChecker.new(
+        controller_name: controller.controller_name,
+        action_name: controller.action_name,
+        has_skip_links: has_custom_skip_links
+      ).perform!
     end
   end
 end

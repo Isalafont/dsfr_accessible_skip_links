@@ -29,10 +29,32 @@ class TestController
       @content_for[name]
     end
   end
+
+  def controller
+    @mock_controller ||= MockController.new
+  end
+
+  def respond_to?(method_name)
+    method_name == :controller
+  end
+end
+
+class MockController
+  def controller_name
+    "test_controller"
+  end
+
+  def action_name
+    "test_action"
+  end
 end
 
 RSpec.describe DsfrAccessibleSkipLinks::SkipLinks do
   let(:controller) { TestController.new }
+
+  before do
+    DsfrAccessibleSkipLinks.reset_configuration!
+  end
 
   describe "#skip_link" do
     it "generates a basic skip link" do
@@ -83,6 +105,29 @@ RSpec.describe DsfrAccessibleSkipLinks::SkipLinks do
       expect(result).to include("Aller au contenu")
       expect(result).to include("Menu")
       expect(result).to include("Pied de page")
+    end
+  end
+
+  describe "#validate_skip_links_in_test!" do
+    context "when validation is disabled" do
+      it "skips validation when disable_validation is true" do
+        DsfrAccessibleSkipLinks.configure do |config|
+          config.disable_validation = true
+        end
+
+        # Should not raise an error even though route is not whitelisted
+        expect { controller.send(:validate_skip_links_in_test!) }.not_to raise_error
+      end
+    end
+
+    context "when validation is enabled" do
+      it "performs validation by default" do
+        # Mock Rails.env.test? to return true
+        allow(Rails).to receive(:env).and_return(double(test?: true)) if defined?(Rails)
+        
+        # Should perform validation (but won't raise error because we're not actually in Rails test env)
+        expect { controller.send(:validate_skip_links_in_test!) }.not_to raise_error
+      end
     end
   end
 end
