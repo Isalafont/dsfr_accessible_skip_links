@@ -33,6 +33,7 @@ module DsfrAccessibleSkipLinks
         end
       end
 
+      # rubocop:disable Metrics/MethodLength
       def readme
         say <<~MSG
           DsfrAccessibleSkipLinks installed successfully!
@@ -46,7 +47,7 @@ module DsfrAccessibleSkipLinks
 
              2. Ensure your layout has these elements with IDs:
                 • #header (main navigation)
-                • #content (main content area)  
+                • #content (main content area)#{'  '}
                 • #footer (page footer)
 
           💡 Quick setup option:
@@ -56,6 +57,7 @@ module DsfrAccessibleSkipLinks
           ℹ️  Helpers are automatically available in all controllers and views.
         MSG
       end
+      # rubocop:enable Metrics/MethodLength
 
       private
 

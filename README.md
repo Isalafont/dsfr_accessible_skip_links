@@ -1,53 +1,53 @@
 # DsfrAccessibleSkipLinks
 
-A Ruby gem that helps projects implement accessible skip links according to the French government design system (DSFR - Système de design de l'État français). This gem provides helpers and utilities for creating navigation skip links that improve web accessibility.
+Une gem Ruby qui aide les projets à implémenter des liens d’évitement accessibles conformément au Système de design de l’État français (DSFR). Cette gem fournit des helpers et utilitaires pour créer des liens d’évitement de navigation qui améliorent l’accessibilité du web.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Ajoutez cette ligne au Gemfile de votre application :
 
 ```ruby
 gem 'dsfr_accessible_skip_links'
 ```
 
-Then install the gem:
+Puis installez la gem :
 
     $ bundle install
 
-Run the installer to set up the skip links in your Rails app:
+Lancez l’installateur pour configurer les liens d’évitement dans votre application Rails :
 
     $ bin/rails g dsfr_accessible_skip_links:install
 
-This will:
-- Copy the skip links partial to `app/views/shared/_skip_links.html.erb`
-- Show you instructions on how to add it to your layout
+Cela va :
+- Copier le partial des liens d’évitement vers `app/views/shared/_skip_links.html.erb`
+- Afficher des instructions pour l’ajouter à votre layout
 
-**Next step:** Add the render call to your layout file (typically `app/views/layouts/application.html.erb`):
+**Étape suivante :** Ajoutez l’appel à `render` dans votre layout (généralement `app/views/layouts/application.html.erb`) :
 
 ```erb
 <body>
   <%= render 'shared/skip_links' %>
-  <!-- rest of your content -->
+  <!-- le reste de votre contenu -->
 </body>
 ```
 
-**Quick setup option:** Use `--inject-layout` flag to automatically add the render call:
+**Option d’installation rapide :** utilisez l’option `--inject-layout` pour ajouter automatiquement l’appel à `render` :
 
     $ bin/rails g dsfr_accessible_skip_links:install --inject-layout
 
-You can also install the gem itself directly as:
+Vous pouvez aussi installer directement la gem :
 
     $ gem install dsfr_accessible_skip_links
 
-## Usage
+## Utilisation
 
-### Required Elements
+### Éléments requis
 
-Make sure your layout contains these elements with the correct IDs:
+Assurez‑vous que votre layout contient ces éléments avec les bons identifiants (ID) :
 
 ```erb
 <header id="header">
-  <!-- your navigation -->
+  <!-- votre navigation -->
 </header>
 
 <main id="content">
@@ -55,22 +55,22 @@ Make sure your layout contains these elements with the correct IDs:
 </main>
 
 <footer id="footer">
-  <!-- your footer -->
+  <!-- votre pied de page -->
 </footer>
 ```
 
-The gem automatically integrates with Rails through a Rails Engine. Helper methods are automatically available in all controllers and views.
+La gem s’intègre automatiquement à Rails via un Rails Engine. Les méthodes helper sont disponibles automatiquement dans tous les contrôleurs et vues.
 
-### Default Skip Links
+### Liens d’évitement par défaut
 
-By default, the gem provides three skip links:
-- **"Aller au contenu"** → `#content`
-- **"Menu"** → `#header`  
-- **"Pied de page"** → `#footer`
+Par défaut, la gem fournit trois liens d’évitement :
+- **« Aller au contenu »** → `#content`
+- **« Menu »** → `#header`  
+- **« Pied de page »** → `#footer`
 
-### Custom Skip Links
+### Liens d’évitement personnalisés
 
-You can customize skip links on a per-page basis using Rails' `content_for`:
+Vous pouvez personnaliser les liens d’évitement page par page grâce à `content_for` de Rails :
 
 ```erb
 <% content_for :skip_links do %>
@@ -80,44 +80,44 @@ You can customize skip links on a per-page basis using Rails' `content_for`:
 <% end %>
 ```
 
-### Custom Content Link Text
+### Texte du lien vers le contenu
 
-You can customize the main content link text:
-
-```erb
-<% content_for :content_skip_link_text, 'Go to main content' %>
-```
-
-### Tab-Prefixed Links
-
-For links that need JavaScript interaction, use the `tab-` prefix:
+Vous pouvez personnaliser le texte du lien vers le contenu principal :
 
 ```erb
-<%= skip_link('Tab Navigation', 'tab-special-section') %>
+<% content_for :content_skip_link_text, 'Aller au contenu principal' %>
 ```
 
-This will add a `data-anchor` attribute for JavaScript handling.
+### Liens préfixés par « tab- »
 
-### Helper Methods
+Pour les liens nécessitant une interaction JavaScript, utilisez le préfixe `tab-` :
 
-The gem provides these helper methods (automatically available in controllers and views):
+```erb
+<%= skip_link('Navigation par onglet', 'tab-special-section') %>
+```
 
-- `skip_link(text, anchor)` - Creates a single skip link
-- `default_skip_links` - Returns the default set of skip links
-- `skip_links_content` - Returns either custom or default skip links
-- `content_skip_link_text` - Returns the content link text
+Cela ajoutera un attribut `data-anchor` pour la gestion côté JavaScript.
 
-### CSS Classes
+### Méthodes helper
 
-The gem uses official DSFR CSS classes:
-- `.fr-skiplinks` - Main container
-- `.fr-container` - DSFR container wrapper
-- `.fr-skiplinks__list` - List container
-- `.fr-link` - Individual link styling
+La gem fournit ces méthodes helper (disponibles automatiquement dans les contrôleurs et vues) :
 
-### HTML Structure
+- `skip_link(text, anchor)` - Crée un lien d’évitement
+- `default_skip_links` - Renvoie l’ensemble par défaut de liens d’évitement
+- `skip_links_content` - Renvoie les liens personnalisés ou, à défaut, les liens par défaut
+- `content_skip_link_text` - Renvoie le texte du lien vers le contenu
 
-The generated HTML follows this structure:
+### Classes CSS
+
+La gem utilise les classes CSS officielles du DSFR :
+- `.fr-skiplinks` - Conteneur principal
+- `.fr-container` - Conteneur DSFR
+- `.fr-skiplinks__list` - Liste des liens
+- `.fr-link` - Style du lien individuel
+
+### Structure HTML
+
+Le HTML généré suit cette structure :
 
 ```html
 <div class="fr-skiplinks">
@@ -131,21 +131,21 @@ The generated HTML follows this structure:
 </div>
 ```
 
-## Skip Links Validation
+## Validation des liens d’évitement
 
-The gem includes a validation service to ensure skip links are properly implemented across your application during testing.
+La gem inclut un service de validation pour s’assurer que les liens d’évitement sont correctement implémentés dans votre application pendant les tests.
 
 ### SkipLinksImplementedChecker
 
-The `SkipLinksImplementedChecker` service automatically validates that pages either:
-- Have custom skip links defined via `content_for(:skip_links)`
-- Are included in your whitelisted routes configuration
+Le service `SkipLinksImplementedChecker` vérifie automatiquement que les pages :
+- ont des liens d’évitement personnalisés définis via `content_for(:skip_links)`, ou
+- sont incluses dans votre configuration de routes en liste blanche (whitelist)
 
-This validation runs automatically in test environments when skip links are rendered.
+Cette validation s’exécute automatiquement en environnement de test lorsque les liens d’évitement sont rendus.
 
 ### Configuration
 
-Configure routes that should be exempt from skip links validation:
+Configurez les routes qui doivent être exemptées de la validation des liens d’évitement :
 
 ```ruby
 # config/initializers/dsfr_accessible_skip_links.rb
@@ -160,9 +160,9 @@ DsfrAccessibleSkipLinks.configure do |config|
 end
 ```
 
-### Disabling Validation
+### Désactiver la validation
 
-If your project already has its own skip links validation system, you can disable the gem's built-in validation:
+Si votre projet dispose déjà de son propre système de validation des liens d’évitement, vous pouvez désactiver la validation intégrée de la gem :
 
 ```ruby
 # config/initializers/dsfr_accessible_skip_links.rb
@@ -171,17 +171,17 @@ DsfrAccessibleSkipLinks.configure do |config|
 end
 ```
 
-When `disable_validation` is set to `true`:
-- The `SkipLinksImplementedChecker` will not run automatically in tests
-- You can still use the gem's helper methods for generating skip links
-- No validation errors will be raised, giving you full control over accessibility checks
+Lorsque `disable_validation` est défini à `true` :
+- `SkipLinksImplementedChecker` ne s’exécute pas automatiquement dans les tests
+- Vous pouvez toujours utiliser les helpers de la gem pour générer les liens d’évitement
+- Aucune erreur de validation n’est levée, vous gardez la main sur les contrôles d’accessibilité
 
-### Manual Usage
+### Utilisation manuelle
 
-You can also use the checker manually in your tests or application:
+Vous pouvez aussi utiliser le vérificateur manuellement dans vos tests ou votre application :
 
 ```ruby
-# In a controller or test
+# Dans un contrôleur ou un test
 checker = DsfrAccessibleSkipLinks::SkipLinksImplementedChecker.new(
   controller_name: 'posts',
   action_name: 'show',
@@ -190,16 +190,16 @@ checker = DsfrAccessibleSkipLinks::SkipLinksImplementedChecker.new(
 
 begin
   checker.perform!
-  # Skip links are properly configured
+  # Les liens d’évitement sont correctement configurés
 rescue DsfrAccessibleSkipLinks::SkipLinksImplementedChecker::SkipLinksNotDefinedError => e
-  # Handle missing skip links
+  # Gérer l’absence de liens d’évitement
   puts e.message
 end
 ```
 
-### Integration in Rails Tests
+### Intégration dans les tests Rails
 
-The validation automatically runs during testing. If a page lacks skip links and isn't whitelisted, you'll see:
+La validation s’exécute automatiquement pendant les tests. Si une page n’a pas de liens d’évitement et n’est pas en liste blanche, vous verrez :
 
 ```
 DsfrAccessibleSkipLinks::SkipLinksImplementedChecker::SkipLinksNotDefinedError: 
@@ -207,9 +207,9 @@ No skip links defined for this page (posts#show). Use content_for(:skip_links)
 to define skip links or define them in a view-specific helper.
 ```
 
-To fix this, either:
-1. Add the route to your whitelist configuration
-2. Define custom skip links in your view:
+Pour corriger cela, soit :
+1. Ajoutez la route à votre configuration de liste blanche
+2. Définissez des liens d’évitement personnalisés dans votre vue :
 
 ```erb
 <% content_for :skip_links do %>
@@ -218,159 +218,159 @@ To fix this, either:
 <% end %>
 ```
 
-## Accessibility Features
+## Fonctionnalités d’accessibilité
 
-This gem implements skip links following [WCAG 2.2 guidelines](https://www.w3.org/WAI/WCAG22/quickref/) and [DSFR (Système de Design de l'État français)](https://www.systeme-de-design.gouv.fr/) specifications:
+Cette gem implémente des liens d’évitement conformément aux [WCAG 2.2](https://www.w3.org/WAI/WCAG22/quickref/) et aux spécifications du [DSFR (Système de design de l’État français)](https://www.systeme-de-design.gouv.fr/).
 
-### Standards Compliance
-- **WCAG 2.2 Level AA**: Complies with international web accessibility standards
-- **DSFR Guidelines**: Follows French government design system accessibility requirements
-- **RGAA 4.1**: Compatible with French web accessibility reference guidelines (Référentiel Général d'Amélioration de l'Accessibilité)
+### Conformité aux standards
+- **WCAG 2.2 niveau AA** : conforme aux standards internationaux d’accessibilité
+- **Recommandations DSFR** : suit les exigences d’accessibilité du système de design de l’État
+- **RGAA 4.1** : compatible avec le Référentiel Général d’Amélioration de l’Accessibilité
 
-### Technical Features
-- **Semantic HTML**: Proper structure with `<nav>` element and `role="navigation"`
-- **Screen Reader Support**: Descriptive `aria-label="Accès rapide"` for assistive technologies
-- **Keyboard Navigation**: Full keyboard accessibility with proper focus management
-- **Skip to Content**: Direct navigation to main content areas (#content, #header, #footer)
-- **Visual Design**: Compatible with official DSFR CSS classes for consistent styling
+### Caractéristiques techniques
+- **HTML sémantique** : structure adéquate avec l’élément `<nav>` et `role="navigation"`
+- **Compatibilité lecteurs d’écran** : `aria-label="Accès rapide"` descriptif pour les aides techniques
+- **Navigation au clavier** : accessibilité complète avec gestion correcte du focus
+- **Aller au contenu** : navigation directe vers les zones principales (#content, #header, #footer)
+- **Design visuel** : compatible avec les classes CSS officielles du DSFR pour un style cohérent
 
-### Quality Assurance
-- **Automated Validation**: Built-in checker ensures skip links are not forgotten on any page
-- **Test Environment Integration**: Validates skip links presence during test runs
-- **Configurable Validation**: Whitelist specific routes that don't require skip links
-- **Development Feedback**: Clear error messages guide developers to implement missing skip links
+### Assurance qualité
+- **Validation automatisée** : un vérificateur intégré évite d’oublier les liens d’évitement
+- **Intégration aux tests** : vérifie la présence des liens pendant les exécutions de test
+- **Validation configurable** : liste blanche des routes ne nécessitant pas de liens d’évitement
+- **Retour développeur** : messages d’erreur clairs pour guider l’implémentation
 
-### DSFR Integration
-This gem implements the official [DSFR skip links component](https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/liens-d-evitement) following:
-- Official CSS classes (`.fr-skiplinks`, `.fr-container`, `.fr-skiplinks__list`, `.fr-link`)
-- Recommended HTML structure and ARIA attributes
-- French language defaults for government websites
-- Responsive design compatibility
+### Intégration DSFR
+Cette gem implémente le composant officiel [liens d’évitement DSFR](https://www.systeme-de-design.gouv.fr/elements-d-interface/composants/liens-d-evitement) en respectant :
+- Les classes CSS officielles (`.fr-skiplinks`, `.fr-container`, `.fr-skiplinks__list`, `.fr-link`)
+- La structure HTML recommandée et les attributs ARIA
+- Les libellés en français par défaut pour les sites publics
+- La compatibilité responsive
 
-### Accessibility Benefits
-- **Faster Navigation**: Screen reader and keyboard users can quickly skip to main content
-- **Reduced Cognitive Load**: Clear navigation structure improves user experience
-- **Legal Compliance**: Helps meet French accessibility requirements for public sector websites
-- **Universal Design**: Benefits all users, especially those with motor or visual impairments
+### Bénéfices en accessibilité
+- **Navigation plus rapide** : les utilisateurs de lecteurs d’écran et au clavier peuvent aller directement au contenu
+- **Charge cognitive réduite** : une structure claire améliore l’expérience utilisateur
+- **Conformité réglementaire** : aide à satisfaire les exigences françaises pour le secteur public
+- **Conception universelle** : profite à tous, notamment aux personnes avec déficiences motrices ou visuelles
 
-For more information about French web accessibility requirements, visit:
-- [DSFR Official Documentation](https://www.systeme-de-design.gouv.fr/)
-- [RGAA Guidelines](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/)
-- [WCAG 2.2 Guidelines](https://www.w3.org/WAI/WCAG22/quickref/)
+Pour en savoir plus sur les exigences d’accessibilité web en France :
+- [Documentation officielle DSFR](https://www.systeme-de-design.gouv.fr/)
+- [RGAA](https://www.numerique.gouv.fr/publications/rgaa-accessibilite/)
+- [WCAG 2.2](https://www.w3.org/WAI/WCAG22/quickref/)
 
-## How to test this gem
+## Comment tester cette gem
 
-There are two main ways to test this gem:
+Il y a deux façons principales de tester cette gem :
 
-1) Run the gem's test suite locally (fast, no Rails app needed)
-- Install dependencies:
+1) Exécuter la suite de tests localement (rapide, pas besoin d’une app Rails)
+- Installer les dépendances :
   ```bash
   bundle install
   ```
-- Run RSpec:
+- Lancer RSpec :
   ```bash
   bundle exec rake spec
   ```
-- Run RuboCop:
+- Lancer RuboCop :
   ```bash
   bundle exec rake rubocop
   ```
-- Run both (default task):
+- Lancer les deux (tâche par défaut) :
   ```bash
   bundle exec rake
   ```
 
-2) Try it inside a real Rails app (to test the generator and integration)
-- Create a new Rails app (or use an existing one):
+2) L’essayer dans une vraie application Rails (pour tester le générateur et l’intégration)
+- Créer une nouvelle application Rails (ou utiliser une existante) :
   ```bash
   rails new demo_app --skip-javascript --skip-hotwire --skip-action-mailbox --skip-action-text --skip-active-storage --skip-active-job --skip-system-test
   cd demo_app
   ```
-- Point the app to your local copy of this gem. In demo_app/Gemfile add:
+- Pointer l’app vers votre copie locale de cette gem. Dans demo_app/Gemfile, ajoutez :
   ```ruby
   gem 'dsfr_accessible_skip_links', path: '../path/to/your/dsfr_accessible_skip_links'
   ```
-  Then run:
+  Puis exécutez :
   ```bash
   bundle install
   ```
-- Run the installer:
+- Lancer l’installateur :
   ```bash
   bin/rails g dsfr_accessible_skip_links:install
   ```
-- Verify the partial exists at: `app/views/shared/_skip_links.html.erb`
-- Add the render call to your layout and ensure required HTML elements exist (see Usage section above)
-- Start the server and check the skip links at the top of the page:
+- Vérifier que le partial existe : `app/views/shared/_skip_links.html.erb`
+- Ajouter l’appel au partial dans votre layout et vérifier la présence des éléments HTML requis (voir section Utilisation ci‑dessus)
+- Démarrer le serveur et vérifier les liens d’évitement en haut de la page :
   ```bash
   bin/rails s
   ```
-  Visit http://localhost:3000 and look for the skip links markup
-  ("Aller au contenu", "Menu", "Pied de page").
+  Rendez‑vous sur http://localhost:3000 et repérez le balisage des liens d’évitement
+  (« Aller au contenu », « Menu », « Pied de page »).
 
-**Notes:**
-- The generator is idempotent: it won't insert the render line twice if it already exists.
+**Notes :**
+- Le générateur est idempotent : il n’insérera pas la ligne `render` deux fois si elle existe déjà.
 
-### Setting up Skip Links Validation
+### Mettre en place la validation des liens d’évitement
 
-After installing the gem, create an initializer to configure whitelisted routes:
+Après avoir installé la gem, créez un initializer pour configurer les routes en liste blanche :
 
 ```bash
-# Create the initializer file
+# Créer le fichier d’initialisation
 touch config/initializers/dsfr_accessible_skip_links.rb
 ```
 
-Add your configuration:
+Ajoutez votre configuration :
 
 ```ruby
 # config/initializers/dsfr_accessible_skip_links.rb
 DsfrAccessibleSkipLinks.configure do |config|
   config.whitelisted_routes = [
-    # Landing pages that use default skip links
+    # Pages d’atterrissage utilisant les liens d’évitement par défaut
     'pages#home',
     'pages#about',
     'pages#contact',
     
-    # Admin pages with standard layout
+    # Pages d’admin avec layout standard
     'admin/dashboard#index',
     'admin/users#index',
     
-    # API endpoints or pages without standard layout
+    # Endpoints d’API ou pages sans layout standard
     'api/health#check',
     'errors#not_found'
   ]
 end
 ```
 
-This configuration ensures that:
-- Listed routes won't trigger validation errors in tests
-- Pages not in the whitelist must define custom skip links
-- You maintain accessibility compliance across your application
+Cette configuration garantit que :
+- Les routes listées ne déclencheront pas d’erreurs de validation dans les tests
+- Les pages hors liste blanche doivent définir des liens d’évitement personnalisés
+- Vous maintenez la conformité d’accessibilité dans toute votre application
 
-## Development
+## Développement
 
-After checking out the repo, run `bundle install` to install dependencies. 
+Après avoir cloné le dépôt, exécutez `bundle install` pour installer les dépendances.
 
-Run the test suite:
+Lancer la suite de tests :
 ```bash
 bundle exec rake spec
 ```
 
-Run RuboCop for code quality checks:
+Lancer RuboCop pour les contrôles de qualité de code :
 ```bash
 bundle exec rake rubocop
 ```
 
-Run both tests and RuboCop:
+Lancer à la fois les tests et RuboCop :
 ```bash
 bundle exec rake
 ```
 
-To install this gem onto your local machine, run `bundle exec rake install`.
+Pour installer cette gem sur votre machine locale, exécutez `bundle exec rake install`.
 
-## Contributing
+## Contribuer
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/Isalafont/dsfr_accessible_skip_links.
+Les rapports de bug et les pull requests sont les bienvenus sur GitHub : https://github.com/Isalafont/dsfr_accessible_skip_links.
 
-## License
+## Licence
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+Cette gem est disponible en open source selon les termes de la [licence MIT](https://opensource.org/licenses/MIT).
