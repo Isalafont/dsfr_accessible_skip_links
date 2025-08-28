@@ -42,7 +42,8 @@ RSpec.describe DsfrAccessibleSkipLinks::SkipLinksImplementedChecker do
         )
         expect { checker.perform! }.to raise_error(
           DsfrAccessibleSkipLinks::SkipLinksImplementedChecker::SkipLinksNotDefinedError,
-          "No skip links defined for this page (test#show). Use content_for(:skip_links) to define skip links or define them in a view-specific helper."
+          "No skip links defined for this page (test#show). /
+					 Use content_for(:skip_links) to define skip links or define them in a view-specific helper."
         )
       end
     end
@@ -109,7 +110,7 @@ RSpec.describe DsfrAccessibleSkipLinks::SkipLinksImplementedChecker do
       DsfrAccessibleSkipLinks.configure do |config|
         config.whitelisted_routes = ["test#route"]
       end
-      
+
       DsfrAccessibleSkipLinks.reset_configuration!
       expect(DsfrAccessibleSkipLinks.configuration.whitelisted_routes).to eq([])
     end
@@ -122,7 +123,7 @@ RSpec.describe DsfrAccessibleSkipLinks::SkipLinksImplementedChecker do
         action_name: "test_action",
         has_skip_links: true
       )
-      
+
       expect(checker.controller_name).to eq("test_controller")
       expect(checker.action_name).to eq("test_action")
       expect(checker.has_skip_links).to be true

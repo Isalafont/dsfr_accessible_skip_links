@@ -46,7 +46,7 @@ module DsfrAccessibleSkipLinks
       return true if DsfrAccessibleSkipLinks.configuration.disable_validation
 
       has_custom_skip_links = content_for?(:skip_links)
-      
+
       SkipLinksImplementedChecker.new(
         controller_name: controller.controller_name,
         action_name: controller.action_name,

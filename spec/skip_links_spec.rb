@@ -31,7 +31,7 @@ class TestController
   end
 
   def controller
-    @mock_controller ||= MockController.new
+    @controller ||= MockController.new
   end
 
   def respond_to?(method_name)
@@ -124,7 +124,7 @@ RSpec.describe DsfrAccessibleSkipLinks::SkipLinks do
       it "performs validation by default" do
         # Mock Rails.env.test? to return true
         allow(Rails).to receive(:env).and_return(double(test?: true)) if defined?(Rails)
-        
+
         # Should perform validation (but won't raise error because we're not actually in Rails test env)
         expect { controller.send(:validate_skip_links_in_test!) }.not_to raise_error
       end
